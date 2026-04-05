@@ -2,10 +2,37 @@ services:
   web:
     build: .
     container_name: dinotour
+    restart: unless-stopped
     ports:
       - "5010:5010"
     environment:
       # Ambiente de produção
       - FLASK_APP=app.py
       - FLASK_ENV=production
-    restart: unless-stopped
+
+    networks:
+      - proxy
+
+    labels:
+      - "traefik.enable=true"
+
+      # Rota (ajuste o path se quiser outro nome)
+      - "traefik.http.routers.dinotour.rule=Host(`integramaker.ifpb.edu.br`) && (PathPrefix(`/dinotour`) || Path(`/dinotour`))"
+
+      - "traefik.http.routers.dinotour.entrypoints=websecure"
+      - "traefik.http.routers.dinotour.tls=true"
+      - "traefik.http.routers.dinotour.tls.certresolver=le"
+
+      # Remove o prefixo /dinotour antes de chegar no container
+      - "traefik.http.middlewares.dinotour-stripprefix.stripprefix.prefixes=/dinotour"
+      - "traefik.http.routers.dinotour.middlewares=dinotour-stripprefix@docker"
+
+      # Porta interna do container (IMPORTANTE!)
+      - "traefik.http.services.dinotour.loadbalancer.server.port=5010"
+
+      # Rede do traefik
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
