@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   web:
     build: .
-    container_name: dinotour_web
+    container_name: dinotour
     ports:
       - "5010:5010"
     volumes:
