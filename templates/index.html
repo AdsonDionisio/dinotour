@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="map-wrapper">
+    <div id="map"></div>
+</div>
+
+<!-- Template escondido para o Card de Detalhes Leaflet (Popup Base) -->
+<template id="popup-template">
+    <div class="site-card">
+        <div class="site-card-image">
+            {photo_content}
+        </div>
+        <div class="site-card-content">
+            <h2 class="site-title">{title}</h2>
+            <p class="site-desc">{desc}</p>
+            <div class="site-actions">
+                <a href="{youtube_link}" target="_blank" class="btn-primary">VER NO YOUTUBE (MAX QUALIDADE)</a>
+                <a href="#" target="_blank" class="tutorial-link" title="Como ativar qualidade 360 no celular">&#9432; Tutorial 360</a>
+            </div>
+            <div style="margin-top: 10px;">
+                <a href="{gmaps_link}" target="_blank" class="btn-secondary">🛤️ Traçar Rota</a>
+            </div>
+        </div>
+    </div>
+</template>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+{% endblock %}

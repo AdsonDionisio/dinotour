@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="admin-container">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Editar Sítio - {{ site.name }}</h2>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn-secondary" style="border: 1px solid #333;">Voltar</a>
+    </div>
+
+    <form class="admin-form" method="POST" action="{{ url_for('edit_site', id=site.id) }}" enctype="multipart/form-data" style="background:#f9f9f9; padding:20px; border-radius:8px; border:1px solid #eee;">
+        
+        <input type="text" name="name" value="{{ site.name }}" required>
+        <textarea name="description" rows="4">{{ site.description or '' }}</textarea>
+        <div style="display:flex; gap:10px;">
+            <input type="number" step="any" name="latitude" value="{{ site.latitude }}" required style="flex:1;">
+            <input type="number" step="any" name="longitude" value="{{ site.longitude }}" required style="flex:1;">
+        </div>
+        <input type="url" name="youtube_url" value="{{ site.youtube_url or '' }}" placeholder="URL do Vídeo no Youtube">
+        
+        <label style="font-size:12px; margin-top:5px; color:#555;">Foto do Sítio do Mapa (Deixe em branco para manter a atual):</label>
+        <input type="file" name="photo" accept="image/*">
+        
+        {% if site.photo_filename %}
+        <div style="margin-top: 10px;">
+            <p style="font-size:12px; margin-bottom: 5px;">Foto atual:</p>
+            <img src="{{ url_for('static', filename='uploads/' + site.photo_filename) }}" style="max-height: 150px; border-radius:4px;">
+        </div>
+        {% endif %}
+
+        <button type="submit" class="btn-primary" style="cursor:pointer; width:200px; margin-top:15px;">ATUALIZAR SÍTIO</button>
+    </form>
+
+</div>
+{% endblock %}
