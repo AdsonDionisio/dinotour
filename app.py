@@ -15,6 +15,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = os.path.join(basedir, 'static', 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+app.config['UPLOAD_VR_FOLDER'] = os.path.join(basedir, 'static', 'vr_uploads')
+os.makedirs(app.config['UPLOAD_VR_FOLDER'], exist_ok=True)
+
 db.init_app(app)
 
 login_manager = LoginManager()
@@ -110,7 +113,8 @@ def get_sites():
             'latitude': s.latitude,
             'longitude': s.longitude,
             'youtube_url': s.youtube_url or '#',
-            'photo_url': url_for('static', filename='uploads/' + s.photo_filename) if s.photo_filename else None
+            'photo_url': url_for('static', filename='uploads/' + s.photo_filename) if s.photo_filename else None,
+            'vr_url': url_for('vr_viewer', id=s.id) if s.image_vr_filename else None
         })
     return jsonify(sites_list)
 
@@ -161,10 +165,19 @@ def add_site():
             unique_name = f"{uuid.uuid4().hex}_{filename}"
             photo.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_name))
             photo_filename = unique_name
+            
+    photo_vr_filename = None
+    if 'photo_vr' in request.files:
+        photo_vr = request.files['photo_vr']
+        if photo_vr.filename != '':
+            filename = secure_filename(photo_vr.filename)
+            unique_name = f"{uuid.uuid4().hex}_{filename}"
+            photo_vr.save(os.path.join(app.config['UPLOAD_VR_FOLDER'], unique_name))
+            photo_vr_filename = unique_name
     
     new_site = Site(name=name, description=description, 
                     latitude=float(latitude), longitude=float(longitude),
-                    youtube_url=youtube_url, photo_filename=photo_filename)
+                    youtube_url=youtube_url, photo_filename=photo_filename, image_vr_filename=photo_vr_filename)
     db.session.add(new_site)
     db.session.commit()
     return redirect(url_for('admin_dashboard'))
@@ -188,6 +201,14 @@ def edit_site(id):
                 photo.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_name))
                 site.photo_filename = unique_name
                 
+        if 'photo_vr' in request.files:
+            photo_vr = request.files['photo_vr']
+            if photo_vr.filename != '':
+                filename = secure_filename(photo_vr.filename)
+                unique_name = f"{uuid.uuid4().hex}_{filename}"
+                photo_vr.save(os.path.join(app.config['UPLOAD_VR_FOLDER'], unique_name))
+                site.image_vr_filename = unique_name
+                
         db.session.commit()
         return redirect(url_for('admin_dashboard'))
         
@@ -200,6 +221,13 @@ def delete_site(id):
     db.session.delete(site)
     db.session.commit()
     return redirect(url_for('admin_dashboard'))
+
+@app.route('/vr/<int:id>')
+def vr_viewer(id):
+    site = Site.query.get_or_404(id)
+    if not site.image_vr_filename:
+        return "Este sítio ainda não possui imagem 360", 404
+    return render_template('vr.html', site=site)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

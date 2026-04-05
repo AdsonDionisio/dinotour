@@ -26,6 +26,15 @@
         </div>
         {% endif %}
 
+        <label style="font-size:12px; margin-top:15px; color:#555;">(NOVO) Imagem 360° VR (Deixe em branco para manter a atual):</label>
+        <input type="file" name="photo_vr" accept="image/*">
+
+        {% if site.image_vr_filename %}
+        <div style="margin-top: 10px;">
+            <p style="font-size:12px; margin-bottom: 5px; color:green; font-weight:bold;">✅ Imagem 360VR configurada! (<a href="{{ url_for('vr_viewer', id=site.id) }}" target="_blank">Testar Vizualização</a>)</p>
+        </div>
+        {% endif %}
+
         <button type="submit" class="btn-primary" style="cursor:pointer; width:200px; margin-top:15px;">ATUALIZAR SÍTIO</button>
     </form>
 

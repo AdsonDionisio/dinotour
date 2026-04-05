@@ -19,6 +19,9 @@
         <label style="font-size:12px; margin-top:5px; color:#555;">Foto do Sítio do Mapa (Opcional):</label>
         <input type="file" name="photo" accept="image/*">
         
+        <label style="font-size:12px; margin-top:5px; color:#555;">(NOVO) Imagem 360° para Realidade Virtual:</label>
+        <input type="file" name="photo_vr" accept="image/*">
+        
         <button type="submit" class="btn-primary" style="cursor:pointer; width:200px; margin-top:10px;">SALVAR SÍTIO</button>
     </form>
 
@@ -28,6 +31,7 @@
             <tr>
                 <th>ID</th>
                 <th>Foto</th>
+                <th>VR 360</th>
                 <th>Nome</th>
                 <th>Lat/Long</th>
                 <th>Youtube</th>
@@ -43,6 +47,13 @@
                         <img src="{{ url_for('static', filename='uploads/' + site.photo_filename) }}" style="width:40px; height:40px; object-fit:cover; border-radius:4px;">
                     {% else %}
                         <img src="{{ url_for('static', filename='img/indisponivel.png') }}" style="width:40px; height:40px; object-fit:cover; border-radius:4px;" title="Indisponível">
+                    {% endif %}
+                </td>
+                <td style="text-align:center;">
+                    {% if site.image_vr_filename %}
+                        <span style="color:green; font-weight:bold;">Sim</span>
+                    {% else %}
+                        <span style="color:gray;">Não</span>
                     {% endif %}
                 </td>
                 <td><strong>{{ site.name }}</strong></td>

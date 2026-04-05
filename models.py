@@ -23,3 +23,4 @@ class Site(db.Model):
     longitude = db.Column(db.Float, nullable=False)
     youtube_url = db.Column(db.String(500), nullable=True)
     photo_filename = db.Column(db.String(255), nullable=True)
+    image_vr_filename = db.Column(db.String(255), nullable=True)

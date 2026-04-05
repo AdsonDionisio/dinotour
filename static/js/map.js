@@ -45,13 +45,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Criar Link do Gmaps "Traçar Rota"
                 var gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${site.latitude},${site.longitude}`;
                 var photoTag = site.photo_url ? `<img src="${site.photo_url}" style="width:100%; height:100%; object-fit:cover;">` : `<img src="/static/img/indisponivel.png" style="width:100%; height:100%; object-fit:cover;" alt="Imagem indisponível">`;
+                
+                var vrButton = site.vr_url ? `<a href="${site.vr_url}" target="_blank" class="btn-secondary" style="background:#5d6148; color:#fff;">🌎 Entrar em 360°</a>` : '';
 
                 var content = templateHtml
                                 .replace('{photo_content}', photoTag)
                                 .replace('{title}', site.name)
                                 .replace('{desc}', site.description || '')
                                 .replace('{youtube_link}', ytLink)
-                                .replace('{gmaps_link}', gmapsLink);
+                                .replace('{gmaps_link}', gmapsLink)
+                                .replace('{vr_button}', vrButton);
 
                 marker.bindPopup(content);
                 markers.push(marker);
