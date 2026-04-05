@@ -5,14 +5,14 @@ services:
     build: .
     container_name: dinotour_web
     ports:
-      - "5000:5000"
+      - "5010:5010"
     volumes:
       # Espelha o seu diretório atual para dentro do container (/app)
       # Isso garante que se você fizer upload de foto ou mudar os dados no banco (app.db),
       # eles persistem no seu computador e não morrem quando o container reiniciar.
       - .:/app
     environment:
-       # Ambiente de produção
+      # Ambiente de produção
       - FLASK_APP=app.py
       - FLASK_ENV=production
     restart: unless-stopped
