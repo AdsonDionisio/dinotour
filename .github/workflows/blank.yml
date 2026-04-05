@@ -31,4 +31,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Trigger Portainer Webhook
-        run: curl -k -X POST ${{ secrets.PORTAINER_WEBHOOK }}
+        run: curl -k -X POST https://200.129.71.149:9443/api/stacks/webhooks/6e203a7c-3fc1-42fc-a24f-0ce0f8e44782?tag=latest
