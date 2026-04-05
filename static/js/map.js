@@ -29,8 +29,12 @@ document.addEventListener("DOMContentLoaded", function() {
             data.forEach(site => {
                 var markerOptions = { title: site.name };
                 
-                // Se não houver video link ou for '#' (padrão do backend quando vazio), aplicamos o ícone vermelho
-                if (!site.youtube_url || site.youtube_url === '#' || site.youtube_url.trim() === '') {
+                // Checagem se possui mídias cadastradas para o Sítio
+                var hasYoutube = site.youtube_url && site.youtube_url !== '#' && site.youtube_url.trim() !== '';
+                var hasVR = Boolean(site.vr_url);
+                
+                // O Ícone só fica vermelho se não tiver vídeo NO YOUTUBE e também não tiver FOTO VR
+                if (!hasYoutube && !hasVR) {
                     markerOptions.icon = redIcon;
                 }
                 
