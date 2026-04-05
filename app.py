@@ -1,12 +1,15 @@
 import os
 import re
 import uuid
+from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from models import db, User, Site
 
 app = Flask(__name__)
+if os.environ.get("PROXY_FIX"):
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 app.config['SECRET_KEY'] = 'dev-secret-key' # In a real app, use a random environment variable
 basedir = os.path.abspath(os.path.dirname(__name__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
@@ -17,6 +20,22 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 app.config['UPLOAD_VR_FOLDER'] = os.path.join(basedir, 'static', 'vr_uploads')
 os.makedirs(app.config['UPLOAD_VR_FOLDER'], exist_ok=True)
+
+# Suporte a subcaminho (ex.: /dinotour)
+_application_root = os.environ.get("APPLICATION_ROOT", "").rstrip("/")
+
+if _application_root:
+
+    class ScriptNameFix:
+        def __init__(self, app, script_name):
+            self.app = app
+            self.script_name = script_name
+
+        def __call__(self, environ, start_response):
+            environ["SCRIPT_NAME"] = self.script_name
+            return self.app(environ, start_response)
+
+    app.wsgi_app = ScriptNameFix(app.wsgi_app, _application_root)
 
 db.init_app(app)
 
