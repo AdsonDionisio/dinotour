@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var markers = [];
 
     // Busca os dados dos sítios da nossa API
-    fetch('/api/sites')
+    var api_url = window.API_SITES_URL || '/api/sites';
+    fetch(api_url)
         .then(response => response.json())
         .then(data => {
             var templateHtml = document.getElementById("popup-template").innerHTML;
@@ -44,7 +45,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 
                 // Criar Link do Gmaps "Traçar Rota"
                 var gmapsLink = `https://www.google.com/maps/dir/?api=1&destination=${site.latitude},${site.longitude}`;
-                var photoTag = site.photo_url ? `<img src="${site.photo_url}" style="width:100%; height:100%; object-fit:cover;">` : `<img src="/static/img/indisponivel.png" style="width:100%; height:100%; object-fit:cover;" alt="Imagem indisponível">`;
+                
+                var base_url = window.APP_ROOT ? window.APP_ROOT : '/';
+                var photoTag = site.photo_url ? `<img src="${site.photo_url}" style="width:100%; height:100%; object-fit:cover;">` : `<img src="${base_url}static/img/indisponivel.png" style="width:100%; height:100%; object-fit:cover;" alt="Imagem indisponível">`;
                 
                 var vrButton = site.vr_url ? `<a href="${site.vr_url}" target="_blank" class="btn-secondary" style="background:#5d6148; color:#fff;">🌎 Entrar em 360°</a>` : '';
 

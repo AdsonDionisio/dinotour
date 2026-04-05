@@ -9,6 +9,8 @@ services:
       # Ambiente de produção
       - FLASK_APP=app.py
       - FLASK_ENV=production
+      - PROXY_FIX=1
+      - APPLICATION_ROOT=/dinotour
 
     networks:
       - proxy
