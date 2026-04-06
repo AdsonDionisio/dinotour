@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="modelos-wrapper" style="width: 100%; flex: 1; background-color: #f7f9f4; display: flex; flex-direction: column; align-items: center; padding: 25px 20px; box-sizing: border-box;">
+    
+    <div style="width: 100%; max-width: 1100px; display: flex; flex-direction: column; flex: 1; gap: 20px;">
+        
+        <!-- Header da Página -->
+        <div style="display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 20px 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05); flex-wrap: wrap; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <div style="background-color: var(--primary-color, #5d6148); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(93, 97, 72, 0.3);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--highlight, #d1b88a)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                </div>
+                <div>
+                    <h1 style="color: var(--primary-color, #5d6148); font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.5px;">Acervo de Modelos 3D</h1>
+                    <p style="color: #666; font-size: 13px; margin: 4px 0 0 0;">Explore o catálogo digitalizado diretamente do Drive.</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px; background: #f0f2ed; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: var(--primary-color, #5d6148);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                Sincronização Ativa
+            </div>
+        </div>
+
+        <!-- Google Drive Embed -->
+        <div style="flex: 1; width: 100%; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+            <div style="height: 4px; width: 100%; background: linear-gradient(90deg, var(--highlight, #d1b88a), var(--primary-color, #5d6148));"></div>
+            <div style="flex: 1; position: relative;">
+                <iframe src="https://drive.google.com/embeddedfolderview?id=1o2LjpJe8my0Vi0tj0wjuhE-Ct_ATeqj1#list" style="width: 100%; height: 100%; border: none;" allow="autoplay; fullscreen"></iframe>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

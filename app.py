@@ -120,6 +120,10 @@ def seed_db():
 def index():
     return render_template('index.html')
 
+@app.route('/modelos3d')
+def modelos3d():
+    return render_template('modelos3d.html')
+
 @app.route('/api/sites')
 def get_sites():
     sites = Site.query.all()

@@ -38,7 +38,7 @@
             <ul>
                 <li><a href="{{ url_for('index') }}">INÍCIO</a></li>
                 <li><a href="#">SOBRE SOUSA</a></li>
-                <li><a href="#">MODELOS 3D</a></li>
+                <li><a href="{{ url_for('modelos3d') }}">MODELOS 3D</a></li>
                 <li><a href="#">PESQUISA</a></li>
                 <li><a href="#">CONTATO</a></li>
                 {% if current_user.is_authenticated %}
