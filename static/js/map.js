@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Inicialização do mapa no centro da Paraíba/Sousa (pode ser ajustado)
     // Coordenadas aproximadas de Sousa: -6.7578, -38.2268
-    var map = L.map('map').setView([-6.7578, -38.2268], 11);
+    var map = L.map('map', { tap: false }).setView([-6.7578, -38.2268], 11);
 
     // Tiles (estilo 'terrain/outdoors' para remeter ao layout da montanha e relevo)
     L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
