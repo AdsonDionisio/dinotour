@@ -36,6 +36,8 @@ body {
     background-color: var(--header-bg);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    position: relative;
+    flex-wrap: wrap;
 }
 
 .logo {
@@ -352,19 +354,61 @@ body {
     text-align: left;
 }
 
+.form-row-coordinates {
+    display: flex;
+    gap: 10px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+}
+
 @media (max-width: 768px) {
     .main-header {
-        flex-direction: column;
-        gap: 10px;
-        padding: 15px;
+        padding: 10px 20px;
+    }
+
+    .logo {
+        flex: 1; /* Ocupa espaço para empurrar ícones para a direita */
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        order: 2;
+    }
+
+    .search-icon {
+        order: 1;
+        margin-right: 15px;
+    }
+
+    .main-nav {
+        display: none;
+        width: 100%;
+        order: 3;
+        margin-top: 15px;
+    }
+
+    .main-nav.active {
+        display: block;
     }
 
     .main-nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
     }
 
     .leaflet-popup-content-wrapper {
         width: 280px;
+    }
+
+    .form-row-coordinates {
+        flex-direction: column;
     }
 }
