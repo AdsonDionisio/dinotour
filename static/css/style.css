@@ -47,11 +47,10 @@ body {
 }
 
 .logo-image {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
+    width: 160px;
+    height: 50px;
     object-fit: contain;
-    background-color: var(--text-color);
+
 }
 
 .logo-text h1 {
@@ -374,7 +373,8 @@ body {
     }
 
     .logo {
-        flex: 1; /* Ocupa espaço para empurrar ícones para a direita */
+        flex: 1;
+        /* Ocupa espaço para empurrar ícones para a direita */
     }
 
     .mobile-menu-btn {
